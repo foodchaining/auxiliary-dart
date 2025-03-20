@@ -1,0 +1,12 @@
+*
+!*/
+
+!/.gitattributes
+!/.gitignore
+!/pubspec.yaml
+
+!/auxiliary/CHANGELOG.md
+!/auxiliary/pubspec.yaml
+!/auxiliary/README.md
+
+!/auxiliary/lib/auxiliary.dart

@@ -1,0 +1,14 @@
+name: "auxiliary"
+description: "An auxiliary Dart library."
+version: "0.0.1"
+repository: "https://github.com/foodchaining/auxiliary-dart"
+
+environment:
+  sdk: "^3.7.0"
+resolution: "workspace"
+
+dependencies:
+
+dev_dependencies:
+  lint:
+  test:
