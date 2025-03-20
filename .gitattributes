@@ -1,6 +1,7 @@
 *                 -text
 /.gitattributes    text eol=lf
 /.gitignore        text eol=lf
+/auxiliary/LICENSE text eol=lf
 *.yaml             text eol=lf
 *.md               text eol=lf
 *.dart             text eol=lf
