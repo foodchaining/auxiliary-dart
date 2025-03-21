@@ -5,9 +5,12 @@
 !/.gitignore
 !/pubspec.yaml
 
+!/auxiliary/analysis_options.yaml
 !/auxiliary/CHANGELOG.md
 !/auxiliary/LICENSE
 !/auxiliary/pubspec.yaml
 !/auxiliary/README.md
 
 !/auxiliary/lib/auxiliary.dart
+!/auxiliary/lib/lint_rules_package.yaml
+!/auxiliary/lib/lint_rules.yaml
