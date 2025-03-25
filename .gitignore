@@ -11,6 +11,8 @@
 !/auxiliary/pubspec.yaml
 !/auxiliary/README.md
 
+!/auxiliary/example/auxiliary_example.dart
+
 !/auxiliary/lib/auxiliary.dart
 !/auxiliary/lib/lint_rules_package.yaml
 !/auxiliary/lib/lint_rules.yaml
