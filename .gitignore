@@ -14,3 +14,9 @@
 !/auxiliary/lib/auxiliary.dart
 !/auxiliary/lib/lint_rules_package.yaml
 !/auxiliary/lib/lint_rules.yaml
+!/auxiliary/lib/src/actor.dart
+!/auxiliary/lib/src/collections.dart
+!/auxiliary/lib/src/defs.dart
+!/auxiliary/lib/src/errors.dart
+!/auxiliary/lib/src/exts.dart
+!/auxiliary/lib/src/log.dart

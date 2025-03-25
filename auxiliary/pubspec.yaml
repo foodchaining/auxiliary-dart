@@ -8,6 +8,20 @@ environment:
 resolution: "workspace"
 
 dependencies:
+  async:
+  collection:
+  crypto:
+  dartz:
+  equatable:
+  intl:
+  logging:
+  meta:
+  nanoid:
+  quiver:
+  quiver_log:
+  rxdart:
+  stack_trace:
+  synchronized:
 
 dev_dependencies:
   lint:
