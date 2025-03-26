@@ -1,7 +1,5 @@
-/*
-  Copyright: (C) 2025 foodchaining
-  License: BSD 3-Clause "New" or "Revised" License
-*/
+// Copyright: (C) 2025 foodchaining
+// License: BSD 3-Clause "New" or "Revised" License
 
 import "package:intl/intl.dart";
 import "package:logging/logging.dart";
@@ -9,12 +7,12 @@ import "package:quiver_log/log.dart";
 
 import "defs.dart";
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 late final Logger log;
 late final DartDebugPrintCallback dartDebugPrint;
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 typedef DartDebugPrintCallback =
     void Function(String? message, {int? wrapWidth});
@@ -32,18 +30,18 @@ void dartSetupLogging(
   SplittingPrintAppender().attachLogger(Logger.root);
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 base class LogFormatter implements Formatter {
-  ////
+  //
   @override
   String call(LogRecord record) {
     var message =
         "${_dateFormat.format(record.time)} ${record.level} " +
         "${record.sequenceNumber} ${record.loggerName} ${record.message}";
-    if (record.error != null) ////
+    if (record.error != null) //
       message = "$message, error: \"${record.error}\"";
-    if (record.stackTrace != null) ////
+    if (record.stackTrace != null) //
       message = "$message\n${record.stackTrace}";
     return message;
   }
@@ -64,4 +62,4 @@ base class SplittingPrintAppender extends Appender {
   static final _reCRLF = RegExp("[\r\n]");
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\

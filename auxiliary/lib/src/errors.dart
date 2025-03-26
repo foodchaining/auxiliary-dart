@@ -1,7 +1,5 @@
-/*
-  Copyright: (C) 2025 foodchaining
-  License: BSD 3-Clause "New" or "Revised" License
-*/
+// Copyright: (C) 2025 foodchaining
+// License: BSD 3-Clause "New" or "Revised" License
 
 import "dart:io";
 
@@ -13,18 +11,18 @@ import "package:synchronized/synchronized.dart";
 import "defs.dart";
 import "log.dart";
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 bool _globalGateClosed = false;
 
 bool get globalGateClosed => _globalGateClosed;
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 void closeGlobalGate() {
   var closing = !_globalGateClosed;
   _globalGateClosed = true;
-  if (closing) ////
+  if (closing) //
     log.severe("Global Gate was closed");
 }
 
@@ -97,7 +95,7 @@ Never afterFatalErrorExit() => exit(1);
 StackTrace? terseStackTrace(StackTrace? stackTrace) =>
     stackTrace == null ? null : Trace.from(stackTrace).terse.vmTrace;
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 @immutable
 base class GateError extends RuntimeError<GateError> {}
@@ -167,4 +165,4 @@ base class WrappingError extends RuntimeError<WrappingError>
           : WrappingError(x, st);
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\

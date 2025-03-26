@@ -1,7 +1,5 @@
-/*
-  Copyright: (C) 2025 foodchaining
-  License: BSD 3-Clause "New" or "Revised" License
-*/
+// Copyright: (C) 2025 foodchaining
+// License: BSD 3-Clause "New" or "Revised" License
 
 import "dart:async";
 import "dart:collection";
@@ -20,7 +18,7 @@ import "package:rxdart/rxdart.dart";
 import "exts.dart";
 import "log.dart";
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 const bool kDartDebugMode = !kDartReleaseMode && !kDartProfileMode;
 const bool kDartProfileMode = bool.fromEnvironment("dart.vm.profile");
@@ -40,7 +38,7 @@ final DateTime zeroTime = DateTime.utc(1);
 final reNotAlNum = RegExp("[^\\p{L}\\p{N}]+", unicode: true);
 final reNotAlNumSp = RegExp("[^\\p{L}\\p{N} ]+", unicode: true);
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 typedef Computation<T extends Object?> = FutureOr<T> Function();
 typedef ComputationSync<T extends Object?> = T Function();
@@ -48,7 +46,7 @@ typedef ComputationAsync<T extends Object?> = Future<T> Function();
 
 typedef Index<T extends Object> = Comparable<T>;
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 void checkEnum<T extends Enum>(T _) {}
 
@@ -92,7 +90,7 @@ Stream<List<int>> bytesToStream(List<int> bytes, {int page = 4096}) =>
 String randomFilename([int size = 20]) =>
     customAlphabet("0123456789abcdefghijklmnopqrstuvwxyz", size);
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 const int fullHashByteLength = 48;
 const int fullHashCharLength = 75;
@@ -115,7 +113,7 @@ String shortHashOfString(String str) => base36String(
   byteHashOfString(str).sublist(0, shortHashByteLength),
 ).padLeft(shortHashCharLength, "0");
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 @immutable
 final class UniqueObject {
@@ -138,7 +136,7 @@ base mixin OrderedEnum<TEnum extends Enum> on Enum {
   bool operator >=(TEnum e) => index >= e.index;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 base class StateMachine<S extends Object, E extends Object> {
   StateMachine(S initial, {String? logging = ""}) : _logging = logging {
@@ -163,7 +161,7 @@ base class StateMachine<S extends Object, E extends Object> {
     );
     if (_logging != null) {
       String message = "$event: $state -> $target";
-      if (_logging.isNotEmpty) ////
+      if (_logging.isNotEmpty) //
         message = "$_logging, $message";
       log.finest(message);
     }
@@ -178,4 +176,4 @@ base class StateMachine<S extends Object, E extends Object> {
   final String? _logging;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\

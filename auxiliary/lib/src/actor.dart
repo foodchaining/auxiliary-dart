@@ -1,14 +1,12 @@
-/*
-  Copyright: (C) 2025 foodchaining
-  License: BSD 3-Clause "New" or "Revised" License
-*/
+// Copyright: (C) 2025 foodchaining
+// License: BSD 3-Clause "New" or "Revised" License
 
 import "package:meta/meta.dart";
 import "package:quiver/check.dart";
 
 import "errors.dart";
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 enum _ActorState { unset, active, deactivated }
 
@@ -17,7 +15,7 @@ base class InactiveActorException
     extends RuntimeException<InactiveActorException> {}
 
 base mixin ActorBase {
-  ////
+  //
   bool isUninitialized() => _state == _ActorState.unset;
   bool isActive() => _state == _ActorState.active;
   bool isDeactivated() => _state == _ActorState.deactivated;
@@ -43,7 +41,7 @@ base mixin ActorBase {
   @protected
   void raiseInactive() {
     checkInitialized();
-    if (!isActive()) ////
+    if (!isActive()) //
       throw InactiveActorException();
   }
 
@@ -63,7 +61,7 @@ base mixin ActorBase {
 }
 
 base mixin Actor on ActorBase {
-  ////
+  //
   @pragma("vm:notify-debugger-on-exception")
   void initialize() {
     setActive();
@@ -96,7 +94,7 @@ base mixin Actor on ActorBase {
 }
 
 base mixin ActorAsync on ActorBase {
-  ////
+  //
   @pragma("vm:notify-debugger-on-exception")
   Future<void> initialize() async {
     setActive();
@@ -128,4 +126,4 @@ base mixin ActorAsync on ActorBase {
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\

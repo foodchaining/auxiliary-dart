@@ -1,7 +1,5 @@
-/*
-  Copyright: (C) 2025 foodchaining
-  License: BSD 3-Clause "New" or "Revised" License
-*/
+// Copyright: (C) 2025 foodchaining
+// License: BSD 3-Clause "New" or "Revised" License
 
 import "dart:collection";
 
@@ -14,12 +12,12 @@ import "package:quiver/collection.dart";
 import "defs.dart";
 import "exts.dart";
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 typedef StdList = List<Object?>;
 typedef StdMap = Map<Object?, Object?>;
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 typedef EquatableStdList = EquatableList<Object?>;
 typedef EquatableStdMap = EquatableMap<Object?, Object?>;
@@ -52,7 +50,7 @@ base class EquatableSet<T extends Object?> extends UnmodifiableSetView<T>
   final List<Set<T>> props;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 @immutable
 base class LateList<T extends Object?> extends DelegatingList<T> {
@@ -69,7 +67,7 @@ base class LateList<T extends Object?> extends DelegatingList<T> {
   final int _length;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 final class SortedMapEntry<K extends Index, V extends Object?> {
   SortedMapEntry(this.key, this.value);
@@ -82,7 +80,7 @@ final class SortedMapEntry<K extends Index, V extends Object?> {
 base class SortedMap<K extends Index, V extends Object?>
     extends IterableBase<SortedMapEntry<K, V>>
     with SetMixin<SortedMapEntry<K, V>> {
-  ////
+  //
   SortedMap({Comparator<K>? comparator})
     : _treeSet = TreeSet<SortedMapEntry<K, V>>(
         comparator:
@@ -135,7 +133,7 @@ base class SortedMap<K extends Index, V extends Object?>
   final TreeSet<SortedMapEntry<K, V>> _treeSet;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 @immutable
 base class IMultimap<K extends Object, V extends Object?>
@@ -178,7 +176,7 @@ base class IMultimap<K extends Object, V extends Object?>
   final IMap<K, IList<V>> _map;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 typedef XY = ({int x, int y});
 
@@ -205,4 +203,4 @@ base class Array2D<T extends Object?> {
   final List<T> _list;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\

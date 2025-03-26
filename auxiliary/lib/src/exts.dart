@@ -1,7 +1,5 @@
-/*
-  Copyright: (C) 2025 foodchaining
-  License: BSD 3-Clause "New" or "Revised" License
-*/
+// Copyright: (C) 2025 foodchaining
+// License: BSD 3-Clause "New" or "Revised" License
 
 import "dart:async";
 import "dart:convert";
@@ -13,32 +11,32 @@ import "package:dartz/dartz.dart";
 import "package:intl/message_format.dart";
 import "package:quiver/check.dart";
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 extension XStreamObject<T extends Object> on Stream<T> {
-  ////
+  //
   StreamSubscription<T> xSubscribe(void Function(T) listener) =>
       listen(listener, onError: (Object _) {});
 }
 
 extension XSinkObject<T extends Object> on Sink<T> {
-  ////
+  //
   void xFire(T event) => add(event);
 }
 
 extension XStreamVoid on Stream<void> {
-  ////
+  //
   StreamSubscription<void> xSubscribe(void Function() listener) =>
       listen((_) => listener(), onError: (Object _) {});
 }
 
 extension XSinkVoid on Sink<void> {
-  ////
+  //
   void xFire() => add(null);
 }
 
 extension XMapObjectObject<K extends Object, V extends Object> on Map<K, V> {
-  ////
+  //
   void xInsert(K key, V value) =>
       update(key, (_) => throw ArgumentError(), ifAbsent: () => value);
 
@@ -66,16 +64,16 @@ extension XMapObjectObject<K extends Object, V extends Object> on Map<K, V> {
 }
 
 extension XIMapObjectObject<K extends Object, V extends Object> on IMap<K, V> {
-  ////
+  //
   IMap<K, V> xPutIfNotNull(K key, V? value) =>
       value == null ? this : put(key, value);
 }
 
 extension XIterableNObject<T extends Object?> on Iterable<T> {
-  ////
+  //
   List<T> xToList({int length = -1, bool growable = false}) {
     checkState(length >= -1);
-    if (length < 0) ////
+    if (length < 0) //
       return toList(growable: growable);
     Iterator<T> it = iterator;
     return List<T>.generate(length, (_) {
@@ -86,7 +84,7 @@ extension XIterableNObject<T extends Object?> on Iterable<T> {
 }
 
 extension XIListObject<T extends Object> on IList<T> {
-  ////
+  //
   T get xSingle => toIterable().single;
   T? get xSingleOrNull => toIterable().singleOrNull;
   T get xFirst => headOption.toNullable()!;
@@ -94,32 +92,32 @@ extension XIListObject<T extends Object> on IList<T> {
 }
 
 extension XMessageFormat on MessageFormat {
-  ////
+  //
   String xFormat(List<Object> parameters) => format(
     parameters.asMap().map((var k, var v) => MapEntry(k.toString(), v)),
   );
 }
 
 extension XResultObject<T extends Object> on Result<T> {
-  ////
+  //
   T? get xSuccess => asValue?.value;
   Object? get xOutband => asError?.error;
 }
 
 extension XUri on Uri {
-  ////
+  //
   bool xIsEmpty() => this == empty;
 
   static final Uri empty = Uri();
 }
 
 extension XXObject<X extends Object> on X {
-  ////
+  //
   T? xTry<T extends Object>() => this is T ? this as T : null;
 }
 
 extension XDateTime on DateTime {
-  ////
+  //
   String xToIsoString() => toUtc().toIso8601String();
 
   static DateTime now() => DateTime.timestamp();
@@ -132,7 +130,7 @@ extension XDateTime on DateTime {
 }
 
 extension XRandomAccessFile on RandomAccessFile {
-  ////
+  //
   void xWriteUint8(int i) => writeByteSync(i);
 
   int xReadUint8() => readByteSync();
@@ -226,4 +224,4 @@ extension XRandomAccessFile on RandomAccessFile {
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
