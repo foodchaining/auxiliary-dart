@@ -11,8 +11,10 @@ import "errors.dart";
 enum _ActorState { unset, active, deactivated }
 
 @immutable
-base class InactiveActorException
-    extends RuntimeException<InactiveActorException> {}
+base class InactiveActorException extends RuntimeException {
+  @override
+  Object get kind => "$InactiveActorException";
+}
 
 base mixin ActorBase {
   //

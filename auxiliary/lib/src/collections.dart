@@ -73,8 +73,8 @@ final class SortedMapEntry<K extends Index, V extends Object?> {
   SortedMapEntry(this.key, this.value);
   SortedMapEntry._key(this.key);
 
-  late V value;
   final K key;
+  late V value;
 }
 
 base class SortedMap<K extends Index, V extends Object?>

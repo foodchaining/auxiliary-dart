@@ -98,47 +98,67 @@ StackTrace? terseStackTrace(StackTrace? stackTrace) =>
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 @immutable
-base class GateError extends RuntimeError<GateError> {}
+base class GateError extends RuntimeError {
+  @override
+  Object get kind => "$GateError";
+}
+
+base mixin RuntimeThrowable {
+  @override
+  String toString() =>
+      message == null ? "$kind" : "$kind: ${Error.safeToString(message)}";
+
+  @mustBeOverridden
+  Object get kind => "$RuntimeThrowable";
+
+  Object? get message;
+}
 
 @immutable
-base class RuntimeException<T extends RuntimeException<T>>
-    implements Exception {
+base class RuntimeException with RuntimeThrowable implements Exception {
   RuntimeException([this.message]);
 
   @override
-  String toString() => message == null ? "$T" : "$T: $message";
+  Object get kind => "$RuntimeException";
 
+  @override
   final Object? message;
 }
 
 @immutable
-base class RuntimeError<T extends RuntimeError<T>> extends Error {
+base class RuntimeError extends Error with RuntimeThrowable {
   RuntimeError([this.message]);
 
   @override
-  String toString() =>
-      message == null ? "$T" : "$T: ${Error.safeToString(message)}";
+  Object get kind => "$RuntimeError";
 
+  @override
   final Object? message;
 }
 
 @immutable
-base mixin WrappingThrowable {
+base mixin WrappingThrowable on RuntimeThrowable {
   @override
   String toString() => "${super.toString()} <= [$throwable]";
 
-  late final Object throwable;
-  late final StackTrace throwableStackTrace;
+  Object get throwable;
+  StackTrace get throwableStackTrace;
 }
 
 @immutable
-base class WrappingException extends RuntimeException<WrappingException>
-    with WrappingThrowable {
-  WrappingException(Object throwable, StackTrace throwableStackTrace) {
+base class WrappingException extends RuntimeException with WrappingThrowable {
+  WrappingException(this.throwable, this.throwableStackTrace) {
     checkState(throwable is! WrappingThrowable);
-    this.throwable = throwable;
-    this.throwableStackTrace = throwableStackTrace;
   }
+
+  @override
+  Object get kind => "$WrappingException";
+
+  @override
+  final Object throwable;
+
+  @override
+  final StackTrace throwableStackTrace;
 
   static WrappingException wrap(Object x, StackTrace st) =>
       x is WrappingThrowable
@@ -149,13 +169,19 @@ base class WrappingException extends RuntimeException<WrappingException>
 }
 
 @immutable
-base class WrappingError extends RuntimeError<WrappingError>
-    with WrappingThrowable {
-  WrappingError(Object throwable, StackTrace throwableStackTrace) {
+base class WrappingError extends RuntimeError with WrappingThrowable {
+  WrappingError(this.throwable, this.throwableStackTrace) {
     checkState(throwable is! WrappingThrowable);
-    this.throwable = throwable;
-    this.throwableStackTrace = throwableStackTrace;
   }
+
+  @override
+  Object get kind => "$WrappingError";
+
+  @override
+  final Object throwable;
+
+  @override
+  final StackTrace throwableStackTrace;
 
   static WrappingError wrap(Object x, StackTrace st) =>
       x is WrappingThrowable
