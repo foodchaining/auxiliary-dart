@@ -3,6 +3,7 @@
 
 import "package:intl/intl.dart";
 import "package:logging/logging.dart";
+import "package:quiver/check.dart";
 import "package:quiver_log/log.dart";
 
 import "defs.dart";
@@ -24,6 +25,9 @@ void dartSetupLogging(
   String name, {
   DartDebugPrintCallback printer = dartDebugPrinter,
 }) {
+  bool debugMode = false;
+  assert((() => debugMode = true)());
+  checkState(debugMode == kDartDebugMode);
   dartDebugPrint = printer;
   log = Logger(name);
   Logger.root.level = kDartDebugMode ? Level.ALL : Level.CONFIG;
