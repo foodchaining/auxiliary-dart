@@ -20,6 +20,9 @@ typedef StdList = List<Object?>;
 /// A [Map] from nullable [Object]s to nullable [Object]s.
 typedef StdMap = Map<Object?, Object?>;
 
+/// A [Set] of nullable [Object]s.
+typedef StdSet = Set<Object?>;
+
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 /// An [EquatableList] of nullable [Object]s.
@@ -28,37 +31,40 @@ typedef EquatableStdList = EquatableList<Object?>;
 /// An [EquatableMap] from nullable [Object]s to nullable [Object]s.
 typedef EquatableStdMap = EquatableMap<Object?, Object?>;
 
-/// An [UnmodifiableListView] mixed with [EquatableMixin].
+/// An [EquatableSet] of nullable [Object]s.
+typedef EquatableStdSet = EquatableSet<Object?>;
+
+/// An [UnmodifiableListView] with deep equality.
 @immutable
 base class EquatableList<T extends Object?> extends UnmodifiableListView<T>
     with EquatableMixin, Stringified {
   ///
-  /// Creates an equatable unmodifiable list view backed by [source].
+  /// Creates an equatable unmodifiable list view backed by the [source].
   EquatableList(List<T> super.source) : props = source;
 
   @override
   final List<T> props;
 }
 
-/// An [UnmodifiableMapView] mixed with [EquatableMixin].
+/// An [UnmodifiableMapView] with deep equality.
 @immutable
 base class EquatableMap<K extends Object?, V extends Object?>
     extends UnmodifiableMapView<K, V>
     with EquatableMixin, Stringified {
   ///
-  /// Creates an equatable unmodifiable map view backed by [source].
+  /// Creates an equatable unmodifiable map view backed by the [source].
   EquatableMap(super.source) : props = [source];
 
   @override
   final List<Map<K, V>> props;
 }
 
-/// An [UnmodifiableSetView] mixed with [EquatableMixin].
+/// An [UnmodifiableSetView] with deep equality.
 @immutable
 base class EquatableSet<T extends Object?> extends UnmodifiableSetView<T>
     with EquatableMixin, Stringified {
   ///
-  /// Creates an equatable unmodifiable set view backed by [source].
+  /// Creates an equatable unmodifiable set view backed by the [source].
   EquatableSet(super.source) : props = [source];
 
   @override
@@ -69,9 +75,9 @@ base class EquatableSet<T extends Object?> extends UnmodifiableSetView<T>
 
 /// An unmodifiable [DelegatingList] with late delegate instantiation.
 ///
-/// The implementation uses an [Iterable] as a source, but iterates over it only
-/// once and only upon the first read or write operation: either fully or up to
-/// the specified length. The result of this iteration is used as a list
+/// The implementation uses an [Iterable] as the source, but iterates over it
+/// only once and only upon the first read or write operation: either fully or
+/// up to the specified length. The result of this iteration is used as the list
 /// [delegate].
 @immutable
 base class LateList<T extends Object?> extends DelegatingList<T> {
@@ -81,9 +87,9 @@ base class LateList<T extends Object?> extends DelegatingList<T> {
   /// The actual iteration over the [iterable] happens only once and is
   /// postponed until the first list access.
   ///
-  /// * If [length] is `-1`, all iterable elements are iterated, and the
+  /// * If the [length] is `-1`, all iterable elements are iterated, and the
   ///   delegating list will have the same number of elements as the iterable.
-  /// * If [length] is greater than `-1`, the iterable must have at least
+  /// * If the [length] is greater than `-1`, the iterable must have at least
   ///   [length] elements. Only the first [length] iterable elements are
   ///   iterated in this case, and the delegating list will have [length]
   ///   elements.
@@ -106,10 +112,10 @@ base class LateList<T extends Object?> extends DelegatingList<T> {
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
-/// A key-value pair representing an entry in a [SortedMap].
+/// A key:value pair representing an entry in a [SortedMap].
 ///
 /// The [value] property of this object can be changed directly. This is the
-/// fastest way to associate a new value with the [key] in a [SortedMap].
+/// most efficient way to associate a new value with the [key] in a [SortedMap].
 final class SortedMapEntry<K extends Index, V extends Object?> {
   ///
   /// Creates an entry with the [key] and the [value].
@@ -122,15 +128,15 @@ final class SortedMapEntry<K extends Index, V extends Object?> {
 
   /// The value associated to the [key] in a sorted map.
   ///
-  /// Can be changed directly, which is the fastest way to associate a new value
-  /// with the [key] in a [SortedMap].
+  /// Can be changed directly, which is the most efficient way to associate a
+  /// new value with the [key] in a [SortedMap].
   late V value;
 }
 
-/// A [Map] of key-value pairs that are stored as sorted entries.
+/// A [Map] of key:value pairs that are stored as sorted entries.
 ///
-/// The implementation of the `SortedMap` class is based on a [TreeSet]. Keys of
-/// the map are compared using the `comparator` function passed in the
+/// The implementation of the `SortedMap` class is based on the [TreeSet]. Keys
+/// of the map are compared using the `comparator` function passed in the
 /// constructor. If the `comparator` function is omitted, the keys are compared
 /// using their [Comparable.compareTo] method.
 ///
@@ -169,7 +175,7 @@ base class SortedMap<K extends Index, V extends Object?>
   SortedMapEntry<K, V>? operator [](K key) =>
       lookup(SortedMapEntry<K, V>._key(key));
 
-  /// Adds a [key]-[value] pair as an entry to this map.
+  /// Adds a key:value pair as an entry to this map.
   ///
   /// Returns `true` if the [key] was not yet in the map. Otherwise returns
   /// `false` and the map is not changed.
@@ -180,7 +186,7 @@ base class SortedMap<K extends Index, V extends Object?>
   /// Returns `false` if the `key` was not found in the map.
   bool erase(K key) => remove(SortedMapEntry<K, V>._key(key));
 
-  /// Adds an [entry] to this map.
+  /// Adds the [entry] to this map.
   ///
   /// Returns `true` if the `entry.key` was not yet in the map. Otherwise
   /// returns `false` and the map is not changed.
@@ -215,13 +221,14 @@ base class SortedMap<K extends Index, V extends Object?>
   @override
   bool remove(Object? element) => _treeSet.remove(element);
 
-  /// Returns an [Iterator] of this map entries that starts at the [anchor] key.
+  /// Returns a [TreeIterator] of this map entries that starts at the [anchor]
+  /// key.
   ///
   /// By default, the iterator includes the `anchor` with the first movement;
   /// the `anchor` is excluded if the [inclusive] is set to `false`. The
-  /// direction of `moveNext` and `movePrevious` is changed if the [reversed] is
-  /// set to `true`.
-  Iterator<SortedMapEntry<K, V>> fromIterator(
+  /// direction of [TreeIterator.moveNext] and [TreeIterator.movePrevious] is
+  /// changed if the [reversed] is set to `true`.
+  TreeIterator<SortedMapEntry<K, V>> fromIterator(
     K anchor, {
     bool reversed = false,
     bool inclusive = true,
@@ -231,9 +238,9 @@ base class SortedMap<K extends Index, V extends Object?>
     inclusive: inclusive,
   );
 
-  /// An [Iterator] that iterates over this map entries.
+  /// A [TreeIterator] that iterates over this map entries.
   @override
-  Iterator<SortedMapEntry<K, V>> get iterator => _treeSet.iterator;
+  TreeIterator<SortedMapEntry<K, V>> get iterator => _treeSet.iterator;
 
   /// The last entry of this map.
   @override
@@ -250,7 +257,7 @@ base class SortedMap<K extends Index, V extends Object?>
 
 /// An immutable associative container that maps a key to multiple values.
 ///
-/// The implementation of the `IMultimap` class is based on an [IMap]. A key
+/// The implementation of the `IMultimap` class is based on the [IMap]. A key
 /// lookup returns an [IList] which values are reversely ordered relatively to
 /// the order of their insertion. The class' [operator ==] and [hashCode] are
 /// implemented with the [EquatableMixin] mixin.
@@ -258,13 +265,13 @@ base class SortedMap<K extends Index, V extends Object?>
 base class IMultimap<K extends Object, V extends Object?>
     with EquatableMixin, Stringified {
   ///
-  /// Creates a new multimap backed by a [map] argument.
+  /// Creates a new multimap backed by the [map] argument.
   IMultimap(IMap<K, IList<V>> map) : _map = map;
 
-  /// Creates a new empty multimap that uses an [order] for the key ordering.
+  /// Creates a new empty multimap that uses the [order] for the key ordering.
   IMultimap.empty(Order<K> order) : _map = IMap<K, IList<V>>.empty(order);
 
-  /// Returns the [IList] of values for the given [key].
+  /// Returns an [IList] of values for the given [key].
   ///
   /// An empty list is returned if the key is not mapped.
   IList<V> getList(K key) => _map.get(key).getOrElse(() => Nil<V>());
@@ -314,15 +321,15 @@ typedef XY = ({int x, int y});
 
 /// A two-dimensional array of objects.
 ///
-/// The implementation of the `Array2D` class is based on a [List]. The access
+/// The implementation of the `Array2D` class is based on the [List]. The access
 /// to elements is performed using an [XY] pair of coordinates which are always
 /// bounds-checked.
 base class Array2D<T extends Object?> {
   ///
-  /// Creates a new two-dimensional array filled with a [fill] value.
+  /// Creates a new two-dimensional array filled with the [fill] value.
   ///
-  /// The array has `[0, xLength)` as a range for `x` coordinates and `[0,
-  /// yLength)` as a range for `y` coordinates.
+  /// The array has `[0, xLength)` as the range for `x` coordinates and `[0,
+  /// yLength)` as the range for `y` coordinates.
   Array2D(this.xLength, this.yLength, T fill)
     : _list = List<T>.filled(xLength * yLength, fill);
 
@@ -350,10 +357,10 @@ base class Array2D<T extends Object?> {
   bool withinBounds(XY xy) =>
       (0 <= xy.x && xy.x < xLength) && (0 <= xy.y && xy.y < yLength);
 
-  /// Defines a valid range for this array `x` coordinates as `[0, xLength)`.
+  /// Defines the valid range for this array `x` coordinates as `[0, xLength)`.
   final int xLength;
 
-  /// Defines a valid range for this array `y` coordinates as `[0, yLength)`.
+  /// Defines the valid range for this array `y` coordinates as `[0, yLength)`.
   final int yLength;
 
   final List<T> _list;
