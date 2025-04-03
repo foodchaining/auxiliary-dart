@@ -116,7 +116,7 @@ base class LateList<T extends Object?> extends DelegatingList<T> {
 ///
 /// The [value] property of this object can be changed directly. This is the
 /// most efficient way to associate a new value with the [key] in a [SortedMap].
-final class SortedMapEntry<K extends Index, V extends Object?> {
+final class SortedMapEntry<K extends Ordered, V extends Object?> {
   ///
   /// Creates an entry with the [key] and the [value].
   SortedMapEntry(this.key, this.value);
@@ -153,7 +153,7 @@ final class SortedMapEntry<K extends Index, V extends Object?> {
 /// print(weekDays.map((var e) => "${e.key} => ${e.value}"));
 /// // (1 => duminică, 7 => sâmbătă)
 /// ```
-base class SortedMap<K extends Index, V extends Object?>
+base class SortedMap<K extends Ordered, V extends Object?>
     extends IterableBase<SortedMapEntry<K, V>>
     with SetMixin<SortedMapEntry<K, V>> {
   ///
