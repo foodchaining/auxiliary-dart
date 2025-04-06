@@ -10,31 +10,32 @@ import "errors.dart";
 
 enum _ActorState { unset, active, deactivated }
 
-/// Thrown when [ActorBase] must be in the `Active` state, but it is not.
+/// Thrown when an [ActorBase] is expected to be in the `Active` state, but it
+/// is not.
 @immutable
 base class InactiveActorException extends RuntimeException {
   @override
   Object get kind => "$InactiveActorException";
 }
 
-/// A model of a possible lifecycle of an [Object]'s instance.
+/// A model for a possible lifecycle of an [Object] instance.
 ///
-/// Internally maintains three states: `Uninitialized`, `Active` and
-/// `Deactivated`. Transitions are unidirectional, in this order:
+/// Internally, the mixin maintains three states: `Uninitialized`, `Active`, and
+/// `Deactivated`. Transitions are unidirectional in this order:
 ///
-/// 1. `Uninitialized`: initial state upon object creation.
-/// 2. `Active`: working state, can be set by [setActive] method when the object
-///    is being initialized or is ready to be used.
-/// 3. `Deactivated`: final state, can be set by [setDeactivated] method when
-///    the object is not expected to change anymore.
+/// 1. `Uninitialized`: the initial state when an object is created.
+/// 2. `Active`: the working state; it can be set by the [setActive] method when
+///    the object is being initialized or is ready for use.
+/// 3. `Deactivated`: the final state; it can be set by the [setDeactivated]
+///    method when the object is not expected to change further.
 ///
-/// The following example demonstrates how the [ActorBase] state could be used
-/// to guard against unnecessary incoming asynchronous data. When the `Store`
-/// object is deactivated — e.g. for a store maintenance, — its
-/// `trackRecentlyLiked` method stops to process new data and does not modify
-/// the `Store` object anymore. After a maintenance, a new `Store` instance can
-/// be constructed and initialized, with its `trackRecentlyLiked` method ready
-/// to further process new data.
+/// The following example demonstrates how the state of an [ActorBase] can be
+/// used to guard against unnecessary incoming asynchronous data. When the
+/// `Store` object is deactivated — for example, during store maintenance — its
+/// `trackRecentlyLiked` method stops processing new data and no longer modifies
+/// the `Store` object. After maintenance, a new `Store` instance can be
+/// constructed and initialized, with its `trackRecentlyLiked` method ready to
+/// process new data further.
 ///
 /// ```dart
 /// base class Store with ActorBase {
@@ -54,8 +55,8 @@ base class InactiveActorException extends RuntimeException {
 /// }
 /// ```
 ///
-/// Initialization and deactivation routines are introduced in [ActorBase]
-/// subtypes: [Actor] and [ActorAsync].
+/// Initialization and deactivation routines are introduced in the [ActorBase]
+/// subtypes, [Actor] and [ActorAsync].
 base mixin ActorBase {
   ///
   /// Whether the state is set to `Uninitialized`.
@@ -104,14 +105,14 @@ base mixin ActorBase {
       throw InactiveActorException();
   }
 
-  /// Set the state to `Active`.
+  /// Sets the state to `Active`.
   @protected
   void setActive() {
     checkUninitialized();
     _state = _ActorState.active;
   }
 
-  /// Set the state to `Deactivated`.
+  /// Sets the state to `Deactivated`.
   @protected
   void setDeactivated() {
     checkActive();
@@ -123,18 +124,18 @@ base mixin ActorBase {
 
 /// Synchronous initialization and deactivation routines for [ActorBase].
 ///
-/// Actual object initialization and deactivation code shall be placed,
+/// Actual object initialization and deactivation code should be placed,
 /// respectively, in the overridden [propose] and [dispose] methods of an
-/// [Actor] subtype. These two methods shall not be called directly by users of
+/// [Actor] subtype. These two methods must not be called directly by users of
 /// an object. A public interface for object initialization and deactivation is
-/// exposed as [initialize] and [deactivate] methods.
+/// exposed via the [initialize] and [deactivate] methods.
 ///
-/// [ActorAsync] is an asynchronous version of this type.
+/// [ActorAsync] is the asynchronous variant of this type.
 base mixin Actor on ActorBase {
   ///
   /// A public interface for object initialization.
   ///
-  /// Sets the state to `Active`, calls [propose] and, if it throws an
+  /// Sets the state to `Active`, calls [propose], and if it throws an
   /// [Exception], calls [deactivate].
   @pragma("vm:notify-debugger-on-exception")
   void initialize() {
@@ -149,7 +150,7 @@ base mixin Actor on ActorBase {
 
   /// A public interface for object deactivation.
   ///
-  /// If the state is `Active`, calls [dispose] and sets the state to
+  /// If the state is `Active`, the method calls [dispose] and sets the state to
   /// `Deactivated`.
   void deactivate() {
     if (isActive()) {
@@ -158,21 +159,23 @@ base mixin Actor on ActorBase {
     }
   }
 
-  /// Called by [initialize]; shall contain actual object initialization code.
+  /// Called by [initialize]; should contain the actual object initialization
+  /// code.
   ///
-  /// Is allowed to throw in the case of an error. If it throws an [Exception],
-  /// default [Actor] implementation will call [dispose] afterwards in order to
-  /// cleanup even partially initialized object.
+  /// The method is allowed to throw in the case of an error. If it throws an
+  /// [Exception], the default [Actor] implementation will call [dispose]
+  /// afterward to clean up even a partially initialized object.
   @protected
   @mustCallSuper
   void propose() {
     checkActive();
   }
 
-  /// Called by [deactivate]; shall contain actual object deactivation code.
+  /// Called by [deactivate]; should contain the actual object deactivation
+  /// code.
   ///
-  /// If [propose] throws an [Exception], default [Actor] implementation will
-  /// call [dispose] in order to cleanup even partially initialized object.
+  /// If [propose] throws an [Exception], the default [Actor] implementation
+  /// will call [dispose] to clean up even a partially initialized object.
   @protected
   @mustCallSuper
   void dispose() {
@@ -182,18 +185,18 @@ base mixin Actor on ActorBase {
 
 /// Asynchronous initialization and deactivation routines for [ActorBase].
 ///
-/// Actual object initialization and deactivation code shall be placed,
+/// Actual object initialization and deactivation code should be placed,
 /// respectively, in the overridden [propose] and [dispose] methods of an
-/// [ActorAsync] subtype. These two methods shall not be called directly by
-/// users of an object. A public interface for object initialization and
-/// deactivation is exposed as [initialize] and [deactivate] methods.
+/// [ActorAsync] subtype. These two methods must not be called directly by users
+/// of an object. A public interface for object initialization and deactivation
+/// is exposed via the [initialize] and [deactivate] methods.
 ///
-/// [Actor] is a synchronous version of this type.
+/// [Actor] is the synchronous variant of this type.
 base mixin ActorAsync on ActorBase {
   ///
   /// A public interface for object initialization.
   ///
-  /// Sets the state to `Active`, calls [propose] and, if it throws an
+  /// Sets the state to `Active`, calls [propose], and if it throws an
   /// [Exception], calls [deactivate].
   @pragma("vm:notify-debugger-on-exception")
   Future<void> initialize() async {
@@ -208,7 +211,7 @@ base mixin ActorAsync on ActorBase {
 
   /// A public interface for object deactivation.
   ///
-  /// If the state is `Active`, calls [dispose] and sets the state to
+  /// If the state is `Active`, the method calls [dispose] and sets the state to
   /// `Deactivated`.
   Future<void> deactivate() async {
     if (isActive()) {
@@ -217,21 +220,24 @@ base mixin ActorAsync on ActorBase {
     }
   }
 
-  /// Called by [initialize]; shall contain actual object initialization code.
+  /// Called by [initialize]; should contain the actual object initialization
+  /// code.
   ///
-  /// Is allowed to throw in the case of an error. If it throws an [Exception],
-  /// default [ActorAsync] implementation will call [dispose] afterwards in
-  /// order to cleanup even partially initialized object.
+  /// The method is allowed to throw in the case of an error. If it throws an
+  /// [Exception], the default [ActorAsync] implementation will call [dispose]
+  /// afterward to clean up even a partially initialized object.
   @protected
   @mustCallSuper
   Future<void> propose() async {
     checkActive();
   }
 
-  /// Called by [deactivate]; shall contain actual object deactivation code.
+  /// Called by [deactivate]; should contain the actual object deactivation
+  /// code.
   ///
-  /// If [propose] throws an [Exception], default [ActorAsync] implementation
-  /// will call [dispose] in order to cleanup even partially initialized object.
+  /// If [propose] throws an [Exception], the default [ActorAsync]
+  /// implementation will call [dispose] to clean up even a partially
+  /// initialized object.
   @protected
   @mustCallSuper
   Future<void> dispose() async {
