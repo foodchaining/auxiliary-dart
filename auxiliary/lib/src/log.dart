@@ -10,17 +10,44 @@ import "defs.dart";
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
+/// An instance of [Logger].
+///
+/// This property is initialized by [dartSetupLogging]. It provides convenient
+/// access to the logging functionality for libraries and applications.
 late final Logger log;
+
+/// A function that prints a message to the console.
+///
+/// This property is initialized by [dartSetupLogging]. It is analogous to
+/// Flutter's
+/// [debugPrint](https://api.flutter.dev/flutter/foundation/debugPrint.html)
+/// property.
 late final DartDebugPrintCallback dartDebugPrint;
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
+/// A function signature for values of the [dartDebugPrint] property.
+///
+/// It is analogous to Flutter's
+/// [DebugPrintCallback](https://api.flutter.dev/flutter/foundation/DebugPrintCallback.html)
+/// typedef.
 typedef DartDebugPrintCallback =
     void Function(String? message, {int? wrapWidth});
 
+/// A default implementation of [DartDebugPrintCallback] for [dartDebugPrint].
+///
+/// This function calls [print] to perform the actual printing. The [wrapWidth]
+/// argument is ignored.
 // ignore: avoid_print
 void dartDebugPrinter(String? message, {int? wrapWidth}) => print(message);
 
+/// Configures the logging functionality of this library.
+///
+/// This function initializes the [log] and [dartDebugPrint] properties. The
+/// [log]'s [Logger] is created or found using the given [name], and is directed
+/// to output messages via a [SplittingPrintAppender]. The given [printer] is
+/// assigned to [dartDebugPrint]. The [Logger.root]'s level is set to
+/// [Level.ALL] in debug mode or [Level.CONFIG] otherwise.
 void dartSetupLogging(
   String name, {
   DartDebugPrintCallback printer = dartDebugPrinter,
@@ -36,6 +63,10 @@ void dartSetupLogging(
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
+/// Formats log messages using a simple pattern.
+///
+/// The following pattern is used for formatting:
+/// > `yyMMdd HH:MM:ss.S level sequence loggerName message`
 base class LogFormatter implements Formatter {
   //
   @override
@@ -53,7 +84,14 @@ base class LogFormatter implements Formatter {
   static final _dateFormat = DateFormat("yyMMdd HH:mm:ss.S");
 }
 
+/// Appends string messages to the console using [dartDebugPrint].
+///
+/// This class uses a [LogFormatter] internally for message formatting. Each
+/// message is split into lines; empty lines are ignored. Non-empty lines are
+/// printed via [dartDebugPrint], with the `wrapWidth` argument set to `1000`.
 base class SplittingPrintAppender extends Appender {
+  ///
+  /// Creates a new [SplittingPrintAppender] instance.
   SplittingPrintAppender() : super(LogFormatter());
 
   @override
