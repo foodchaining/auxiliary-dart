@@ -37,7 +37,7 @@ bool get globalGateClosed => _globalGateClosed;
 void closeGlobalGate() {
   var closing = !_globalGateClosed;
   _globalGateClosed = true;
-  if (closing) //
+  if (closing) ////
     log.severe("Global Gate was closed");
 }
 
@@ -267,10 +267,10 @@ base class WrappingException extends RuntimeException with WrappingThrowable {
   /// [WrappingThrowable].
   static WrappingException wrap(Object x, StackTrace st) =>
       x is WrappingThrowable
-          ? (x is WrappingException
-              ? x
-              : WrappingException(x.throwable, x.throwableStackTrace))
-          : WrappingException(x, st);
+      ? (x is WrappingException
+            ? x
+            : WrappingException(x.throwable, x.throwableStackTrace))
+      : WrappingException(x, st);
 }
 
 /// A [RuntimeError] that wraps [throwable] and [throwableStackTrace].
@@ -299,12 +299,11 @@ base class WrappingError extends RuntimeError with WrappingThrowable {
   /// [WrappingError] based on [x]'s properties if [x] is a [WrappingException],
   /// or returns a new [WrappingError] from [x] and [st] if [x] is not a
   /// [WrappingThrowable].
-  static WrappingError wrap(Object x, StackTrace st) =>
-      x is WrappingThrowable
-          ? (x is WrappingError
-              ? x
-              : WrappingError(x.throwable, x.throwableStackTrace))
-          : WrappingError(x, st);
+  static WrappingError wrap(Object x, StackTrace st) => x is WrappingThrowable
+      ? (x is WrappingError
+            ? x
+            : WrappingError(x.throwable, x.throwableStackTrace))
+      : WrappingError(x, st);
 }
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\

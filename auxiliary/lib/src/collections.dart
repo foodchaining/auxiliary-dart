@@ -163,10 +163,9 @@ base class SortedMap<K extends Ordered, V extends Object?>
   /// a.compareTo(b)`.
   SortedMap({Comparator<K>? comparator})
     : _treeSet = TreeSet<SortedMapEntry<K, V>>(
-        comparator:
-            comparator != null
-                ? (var a, var b) => comparator(a.key, b.key)
-                : (var a, var b) => compare1<K>(a.key, b.key),
+        comparator: comparator != null
+            ? (var a, var b) => comparator(a.key, b.key)
+            : (var a, var b) => compare1<K>(a.key, b.key),
       );
 
   /// Uses [key] to locate an entry in this map.

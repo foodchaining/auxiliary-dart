@@ -285,7 +285,7 @@ base class StateMachine<S extends Object, E extends Object> {
     );
     if (_logging != null) {
       String message = "$event: $state -> $target";
-      if (_logging.isNotEmpty) //
+      if (_logging.isNotEmpty) ////
         message = "$_logging, $message";
       log.finest(message);
     }

@@ -43,10 +43,10 @@ base class InactiveActorException extends RuntimeException {
 ///   Future<void> trackRecentlyLiked(Stream<String> likedItems) async {
 ///     checkActive();
 ///     await for (var item in likedItems) {
-///       if (!isActive()) //
+///       if (!isActive()) ////
 ///         break;
 ///       _recentlyLiked[item] = DateTime.timestamp();
-///       if (!isActive()) //
+///       if (!isActive()) ////
 ///         break;
 ///     }
 ///   }
@@ -101,7 +101,7 @@ base mixin ActorBase {
   @protected
   void raiseInactive() {
     checkInitialized();
-    if (!isActive()) //
+    if (!isActive()) ////
       throw InactiveActorException();
   }
 

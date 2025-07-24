@@ -74,9 +74,9 @@ base class LogFormatter implements Formatter {
     var message =
         "${_dateFormat.format(record.time)} ${record.level} " +
         "${record.sequenceNumber} ${record.loggerName} ${record.message}";
-    if (record.error != null) //
+    if (record.error != null) ////
       message = "$message, error: \"${record.error}\"";
-    if (record.stackTrace != null) //
+    if (record.stackTrace != null) ////
       message = "$message\n${record.stackTrace}";
     return message;
   }
