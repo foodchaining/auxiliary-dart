@@ -9,6 +9,7 @@ import "dart:typed_data";
 import "package:async/async.dart";
 import "package:dartz/dartz.dart";
 import "package:intl/message_format.dart";
+import "package:meta/meta.dart";
 import "package:quiver/check.dart";
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
@@ -218,10 +219,14 @@ extension XDateTime on DateTime {
 extension XRandomAccessFile on RandomAccessFile {
   ///
   /// Synchronously writes a single byte to the file.
-  void xWriteUint8(int i) => writeByteSync(i);
+  void xWriteUint8(int i) => checkState(writeByteSync(i) == 1);
 
   /// Synchronously reads a single byte from the file.
-  int xReadUint8() => readByteSync();
+  int xReadUint8() {
+    var byte = readByteSync();
+    checkInput(byte != -1);
+    return byte;
+  }
 
   /// Synchronously writes a 32-bit integer to the file.
   void xWriteInt32(int i) {
@@ -233,7 +238,7 @@ extension XRandomAccessFile on RandomAccessFile {
   /// Synchronously reads a 32-bit integer from the file.
   int xReadInt32() {
     var data = ByteData(4);
-    readIntoSync(data.buffer.asUint8List());
+    checkInput(readIntoSync(data.buffer.asUint8List()) == 4);
     return data.getInt32(0);
   }
 
@@ -247,7 +252,7 @@ extension XRandomAccessFile on RandomAccessFile {
   /// Synchronously reads a 64-bit integer from the file.
   int xReadInt64() {
     var data = ByteData(8);
-    readIntoSync(data.buffer.asUint8List());
+    checkInput(readIntoSync(data.buffer.asUint8List()) == 8);
     return data.getInt64(0);
   }
 
@@ -261,7 +266,7 @@ extension XRandomAccessFile on RandomAccessFile {
   /// Synchronously reads a [double] from the file.
   double xReadFloat64() {
     var data = ByteData(8);
-    readIntoSync(data.buffer.asUint8List());
+    checkInput(readIntoSync(data.buffer.asUint8List()) == 8);
     return data.getFloat64(0);
   }
 
@@ -275,7 +280,8 @@ extension XRandomAccessFile on RandomAccessFile {
   /// Synchronously reads a [String] from the file.
   String xReadString() {
     int length = xReadInt32();
-    var bytes = readSync(length);
+    Uint8List bytes = readSync(length);
+    checkInput(bytes.length == length);
     return utf8.decode(bytes);
   }
 
@@ -296,6 +302,7 @@ extension XRandomAccessFile on RandomAccessFile {
   Uint32List xReadUint32List() {
     var length = xReadInt32();
     Uint8List bytes = readSync(length);
+    checkInput(bytes.length == length);
     return bytes.buffer.asUint32List();
   }
 
@@ -310,6 +317,7 @@ extension XRandomAccessFile on RandomAccessFile {
   Uint16List xReadUint16List() {
     var length = xReadInt32();
     Uint8List bytes = readSync(length);
+    checkInput(bytes.length == length);
     return bytes.buffer.asUint16List();
   }
 
@@ -324,7 +332,15 @@ extension XRandomAccessFile on RandomAccessFile {
   Float32List xReadFloat32List() {
     var length = xReadInt32();
     Uint8List bytes = readSync(length);
+    checkInput(bytes.length == length);
     return bytes.buffer.asFloat32List();
+  }
+
+  /// Throws a [StateError] if the [complete] argument is `false`.
+  @protected
+  static void checkInput(bool complete) {
+    if (!complete) ////
+      throw StateError("XRandomAccessFile: incomplete read operation");
   }
 }
 
