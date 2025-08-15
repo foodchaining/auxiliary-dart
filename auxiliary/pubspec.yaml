@@ -1,6 +1,6 @@
 name: "auxiliary"
 description: "An auxiliary Dart library: classes, functions, constants, etc."
-version: "0.0.3"
+version: "0.0.4"
 repository: "https://github.com/foodchaining/auxiliary-dart/tree/main/auxiliary"
 
 environment:

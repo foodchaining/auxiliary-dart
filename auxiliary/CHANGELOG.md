@@ -1,3 +1,9 @@
+## [0.0.4] 20250815
+
+- More informative `README.md`.
+- Added "topics" to `pubspec.yaml`.
+- Added checks for read operations in `XRandomAccessFile`.
+
 ## [0.0.3] 20250725
 
 - Added documentation for `auxiliary/lib/src/*.dart` files.
